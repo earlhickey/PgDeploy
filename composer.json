@@ -1,0 +1,24 @@
+{
+  "name" : "earlhickey/pg-deploy",
+  "description" : "ZF2 deploying module",
+  "version" : "0.1",
+  "require" : {
+    "php" : ">=5.3.3",
+    "zendframework/zendframework" : "2.3.*"
+  },
+  "authors" : [ {
+    "name" : "Patrick Groot",
+    "email" : "pgroot@gmail.com",
+    "homepage" : "http://pg13.nl/"
+  } ],
+  "keywords" : [ "zf2", "deploy", "pg13" ],
+  "autoload" : {
+    "psr-0" : {
+      "PgDeploy" : "src/"
+    },
+    "classmap" : [ "./Module.php" ]
+  },
+  "license" : "BSD-3-Clause",
+  "type" : "library",
+  "homepage" : "https://github.com/earlhickey/PgDeploy"
+}
