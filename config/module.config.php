@@ -5,7 +5,7 @@
 return array(
     'controllers' => array(
         'invokables' => array(
-            'PgDeploy\Controller\Index' => 'PgDeploy\Controller\IndexController'
+            'PgDeploy\Controller\Github' => 'PgDeploy\Controller\GithubController'
         ),
     ),
     'router' => array(
@@ -22,7 +22,7 @@ return array(
                         // Change this value to reflect the namespace in which
                         // the controllers for your module are found
                         '__NAMESPACE__' => 'PgDeploy\Controller',
-                        'controller'    => 'Index',
+                        'controller'    => 'Github',
                         'action'        => 'index',
                     ),
                 ),
@@ -32,6 +32,9 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             'PgDeploy' => __DIR__ . '/../view',
+        ),
+        'strategies' => array(
+            'ViewJsonStrategy',
         ),
     ),
 );

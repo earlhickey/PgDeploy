@@ -1,0 +1,31 @@
+<?php
+
+return array(
+    /**
+     * Specify your Github secret.
+     * You can find it at Settings -> Webhooks & Services -> Edit
+     */
+    'secret' => '**YourExtremelySecretSecret**',
+    /**
+     * Specify your repositories
+     */
+    'repositories' => array(
+        /**
+         *
+         */
+        'gitname/repository' => array(
+            /**
+             * Remote URL
+             */
+            'url' => 'https://github.com/gitname/repository',
+            /**
+             * What branches are allowed
+             */
+            'branches' => array(
+                'master',
+                'development'
+            ),
+            'target' => '/Users/username/path/to/deployed/repro'
+        )
+    )
+);
