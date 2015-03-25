@@ -25,7 +25,15 @@ return array(
                 'master',
                 'development'
             ),
-            'target' => '/Users/username/path/to/deployed/repro'
+            /**
+             * Dir where the git repro lives
+             * this should not be web accessable
+             */
+            'workingdir' => '/home/username/path/to/deployed/repro',
+            /**
+             *
+             */
+            'destination' => '/home/username/path/to/deployed/repro-staging'
         )
     )
 );

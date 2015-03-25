@@ -51,9 +51,17 @@ class GithubController extends AbstractActionController
             return $this->render($response);
         }
 
-        // the repro and branch we're going to deal with
+        /**
+         * the repro we're going to deal with
+         * - url
+         * - branch
+         * - workingdir
+         */
+        // the repro, url and branch we're going to deal with
         $repository = $config['repositories'][$data->repository->full_name];
+        $url = $repository['url'];
         $branch = str_replace('refs/heads/', '', $data->ref);
+        $workingdir = $repository['workingdir'];
 
         // do we have a valid branch?
         if (!in_array($branch, $repository['branches']))
@@ -62,12 +70,18 @@ class GithubController extends AbstractActionController
             return $this->render($response);
         }
 
-        // we are all set, deploy!
-        $response['repository'] = $repository['url'];
-        $response['branch'] = $branch;
+        /**
+         * we are all set!
+         */
 
-        // path to your site deployment script
-        //exec('./build.sh');
+        // run deployment script
+        $deploy = dirname(__FILE__) . '/../../../scripts/deploy.sh';
+        exec("$deploy $url $branch $workingdir 2>&1", $deployOutput);
+
+        // set response
+        $response['repository'] = $url;
+        $response['branch'] = $branch;
+        $response['deploy'] = $deployOutput;
 
         return $this->render($response);
 
@@ -83,7 +97,12 @@ class GithubController extends AbstractActionController
      */
     private function render($content)
     {
-        $result = Json::encode((object) $content);
+        $json = Json::encode((object) $content);
+
+        /*
+         * Make the output human readable
+         */
+        $result = Json::prettyPrint($json, array('indent' => '  '));
 
         $response = $this->getResponse();
         $response->getHeaders()->addHeaders(array(
@@ -102,7 +121,7 @@ class GithubController extends AbstractActionController
      * Getters/Setter for DI
      *
      */
-    public function getConfigService()
+    private function getConfigService()
     {
         if (!$this->configService) {
             $this->configService = $this->getServiceLocator()->get('Config');
