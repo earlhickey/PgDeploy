@@ -18,14 +18,15 @@ class GithubController extends AbstractActionController
 
         $respons = array();
 
-        $headers = getallheaders();
+        $request  = $this->request;
+        $headers = $request->getHeaders();
 
-        if (!isset($headers['X-Hub-Signature'])) {
-            $response['error'] = 'Bad X-Hub-Signature';
+        if (!$headers->has('X-Hub-Signature')) {
+            $response['error'] = 'Authorization header missing';
             return $this->render($response);
         }
 
-        $hubSignature = $headers['X-Hub-Signature'];
+        $hubSignature = $headers->get('X-Hub-Signature')->getFieldValue();
 
         list($algo, $hash) = explode('=', $hubSignature, 2);
 
